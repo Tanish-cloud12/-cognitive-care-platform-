@@ -1,34 +1,20 @@
-# =========================
-# Frontend - React / Vite
-# =========================
-frontend/node_modules/
-frontend/dist/
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
 
-# =========================
-# Backend - Python
-# =========================
-backend/venv/
-backend/.venv/
-backend/__pycache__/
-backend/**/__pycache__/
-backend/*.pyc
-backend/**/*.pyc
-
-# =========================
 # Environment variables
-# =========================
 .env
-.env.*
-!.env.example
+backend/.env
 
-# =========================
+# Node
+node_modules/
+frontend/node_modules/
+
+# Build
+dist/
+build/
+
 # IDE
-# =========================
 .vscode/
-.idea/
-
-# =========================
-# OS
-# =========================
-.DS_Store
-Thumbs.db
