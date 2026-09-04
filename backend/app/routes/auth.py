@@ -1,9 +1,11 @@
 from flask import Blueprint, request, jsonify
-from app.middleware.auth import token_required
+
 from app.services.auth_service import (
     register_user,
     login_user
 )
+
+from app.middleware.auth import token_required
 
 
 auth_bp = Blueprint(
@@ -18,17 +20,24 @@ def register():
 
     data = request.get_json()
 
-    patient_id = data.get("patient_id")
+    user_id = data.get("user_id")
     password = data.get("password")
+    role = data.get("role")
 
-    if not patient_id or not password:
+    if not user_id or not password or not role:
         return jsonify({
-            "message": "Patient ID and password are required"
+            "message": "User ID, password and role are required"
+        }), 400
+
+    if role not in ["patient", "caregiver"]:
+        return jsonify({
+            "message": "Invalid role"
         }), 400
 
     success, message = register_user(
-        patient_id,
-        password
+        user_id,
+        password,
+        role
     )
 
     if not success:
@@ -46,17 +55,24 @@ def login():
 
     data = request.get_json()
 
-    patient_id = data.get("patient_id")
+    user_id = data.get("user_id")
     password = data.get("password")
+    role = data.get("role")
 
-    if not patient_id or not password:
+    if not user_id or not password or not role:
         return jsonify({
-            "message": "Patient ID and password are required"
+            "message": "User ID, password and role are required"
+        }), 400
+
+    if role not in ["patient", "caregiver"]:
+        return jsonify({
+            "message": "Invalid role"
         }), 400
 
     token, error = login_user(
-        patient_id,
-        password
+        user_id,
+        password,
+        role
     )
 
     if error:
@@ -66,15 +82,16 @@ def login():
 
     return jsonify({
         "message": "Login successful",
-        "access_token": token
+        "access_token": token,
+        "role": role
     }), 200
 
 
 @auth_bp.route("/me", methods=["GET"])
 @token_required
-def get_current_user(user_id):
+def get_current_user(user_id, role):
 
     return jsonify({
-        "message": "You are authenticated",
-        "user_id": user_id
+        "user_id": user_id,
+        "role": role
     }), 200

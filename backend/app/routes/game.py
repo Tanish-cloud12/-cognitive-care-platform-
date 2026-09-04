@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 
-from app.middleware.auth import token_required
+from app.middleware.auth import role_required
 from app.services.game_service import create_game_session
 from app.services.game_result_service import save_game_result
 
@@ -12,10 +12,9 @@ game_bp = Blueprint(
 )
 
 
-# Start a new game session
 @game_bp.route("/session", methods=["POST"])
-@token_required
-def start_game(user_id):
+@role_required("patient")
+def start_game(user_id, role):
 
     session_id = create_game_session(user_id)
 
@@ -25,9 +24,9 @@ def start_game(user_id):
     }), 201
 
 
-# Submit game result
 @game_bp.route("/result", methods=["POST"])
-def submit_game_result():
+@role_required("patient")
+def submit_game_result(user_id, role):
 
     data = request.get_json()
 
@@ -51,6 +50,7 @@ def submit_game_result():
 
     success, message = save_game_result(
         session_id,
+        user_id,
         game_type,
         score,
         mistakes,
@@ -62,7 +62,7 @@ def submit_game_result():
     if not success:
         return jsonify({
             "message": message
-        }), 404
+        }), 403
 
     return jsonify({
         "message": message

@@ -33,10 +33,11 @@ def verify_password(password, hashed_password):
     )
 
 
-def create_access_token(user_id):
+def create_access_token(user_id, role):
 
     payload = {
         "user_id": user_id,
+        "role": role,
         "exp": datetime.utcnow() + timedelta(hours=24)
     }
 

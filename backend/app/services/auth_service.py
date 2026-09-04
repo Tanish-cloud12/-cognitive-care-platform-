@@ -7,47 +7,47 @@ from app.utils.security import (
 )
 
 
-def register_user(patient_id, password):
+def register_user(user_id, password, role):
 
     existing_user = users_collection.find_one({
-        "patient_id": patient_id
+        "user_id": user_id
     })
 
     if existing_user:
-        return False, "Patient ID already exists"
+        return False, "User ID already exists"
 
     hashed_password = hash_password(password)
 
     user = {
-        "patient_id": patient_id,
-        "password": hashed_password
+        "user_id": user_id,
+        "password": hashed_password,
+        "role": role
     }
 
     users_collection.insert_one(user)
 
-    return True, "Patient registered successfully"
+    return True, "User registered successfully"
 
 
-def login_user(patient_id, password):
+def login_user(user_id, password, role):
 
-    # Find patient
     user = users_collection.find_one({
-        "patient_id": patient_id
+        "user_id": user_id,
+        "role": role
     })
 
     if not user:
-        return None, "Invalid patient ID or password"
+        return None, "Invalid ID or password"
 
-    # Check password
     if not verify_password(
         password,
         user["password"]
     ):
-        return None, "Invalid patient ID or password"
+        return None, "Invalid ID or password"
 
-    # Create JWT
     token = create_access_token(
-    user["patient_id"]
-)
+        user["user_id"],
+        user["role"]
+    )
 
     return token, None

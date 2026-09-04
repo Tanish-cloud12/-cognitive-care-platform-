@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function Signup() {
-    const [patientId, setPatientId] = useState("");
+    const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
@@ -12,7 +12,6 @@ function Signup() {
 
         setMessage("");
 
-        // Check passwords
         if (password !== confirmPassword) {
             setMessage("Passwords do not match");
             return;
@@ -29,8 +28,9 @@ function Signup() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        patient_id: patientId,
+                        user_id: userId,
                         password: password,
+                        role: "patient",
                     }),
                 }
             );
@@ -43,10 +43,11 @@ function Signup() {
                 return;
             }
 
-            setMessage("Registration successful! You can now login.");
+            setMessage(
+                "Registration successful! You can now login."
+            );
 
-            // Clear form
-            setPatientId("");
+            setUserId("");
             setPassword("");
             setConfirmPassword("");
 
@@ -60,10 +61,9 @@ function Signup() {
 
     return (
         <div>
-
             <h1>Cognitive Care</h1>
 
-            <h2>Create Account</h2>
+            <h2>Create Patient Account</h2>
 
             <form onSubmit={handleSignup}>
 
@@ -72,9 +72,9 @@ function Signup() {
 
                     <input
                         type="text"
-                        value={patientId}
+                        value={userId}
                         onChange={(e) =>
-                            setPatientId(e.target.value)
+                            setUserId(e.target.value)
                         }
                         placeholder="Enter Patient ID"
                         required
@@ -115,22 +115,28 @@ function Signup() {
 
                 <br />
 
-                <button type="submit" disabled={loading}>
-                    {loading ? "Creating Account..." : "Sign Up"}
+                <button
+                    type="submit"
+                    disabled={loading}
+                >
+                    {loading
+                        ? "Creating Account..."
+                        : "Sign Up"}
                 </button>
 
             </form>
 
-            {message && (
-                <p>{message}</p>
-            )}
+            {message && <p>{message}</p>}
 
             <br />
 
-            <button onClick={() => window.location.href = "/"}>
+            <button
+                onClick={() =>
+                    window.location.href = "/"
+                }
+            >
                 Already have an account? Login
             </button>
-
         </div>
     );
 }

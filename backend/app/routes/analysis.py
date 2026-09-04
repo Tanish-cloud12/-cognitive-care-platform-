@@ -13,7 +13,7 @@ analysis_bp = Blueprint(
 
 @analysis_bp.route("", methods=["GET"])
 @token_required
-def get_analysis(user_id):
+def get_analysis(user_id, role):
 
     analysis = get_patient_analysis(user_id)
 

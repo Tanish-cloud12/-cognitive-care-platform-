@@ -3,30 +3,25 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import CaregiverDashboard from "./pages/CaregiverDashboard";
 
 function App() {
     return (
         <BrowserRouter>
-
             <Routes>
 
-                <Route
-                    path="/"
-                    element={<Login />}
-                />
+                <Route path="/" element={<Login />} />
+
+                <Route path="/signup" element={<Signup />} />
+
+                <Route path="/dashboard" element={<Dashboard />} />
 
                 <Route
-                    path="/signup"
-                    element={<Signup />}
-                />
-
-                <Route
-                    path="/dashboard"
-                    element={<Dashboard />}
+                    path="/caregiver"
+                    element={<CaregiverDashboard />}
                 />
 
             </Routes>
-
         </BrowserRouter>
     );
 }

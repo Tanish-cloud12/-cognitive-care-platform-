@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 function Login() {
-    const [patientId, setPatientId] = useState("");
+    const [role, setRole] = useState("patient");
+    const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
@@ -21,8 +22,9 @@ function Login() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        patient_id: patientId,
+                        user_id: userId,
                         password: password,
+                        role: role,
                     }),
                 }
             );
@@ -35,16 +37,26 @@ function Login() {
                 return;
             }
 
-            // Store JWT token
+            // Save token
             localStorage.setItem(
                 "access_token",
                 data.access_token
             );
 
+            // Save role
+            localStorage.setItem(
+                "role",
+                data.role
+            );
+
             setMessage("Login successful!");
 
-            // Go to dashboard
-            window.location.href = "/dashboard";
+            // Redirect based on role
+            if (data.role === "patient") {
+                window.location.href = "/dashboard";
+            } else if (data.role === "caregiver") {
+                window.location.href = "/caregiver";
+            }
 
         } catch (error) {
             console.error(error);
@@ -60,18 +72,52 @@ function Login() {
 
             <h2>Login</h2>
 
+            <div>
+                <label>Select Role</label>
+
+                <br />
+
+                <button
+                    type="button"
+                    onClick={() => setRole("patient")}
+                >
+                    Patient
+                </button>
+
+                <button
+                    type="button"
+                    onClick={() => setRole("caregiver")}
+                >
+                    Caregiver
+                </button>
+            </div>
+
+            <br />
+
+            <p>
+                Selected role: <strong>{role}</strong>
+            </p>
+
             <form onSubmit={handleLogin}>
 
                 <div>
-                    <label>Patient ID</label>
+                    <label>
+                        {role === "patient"
+                            ? "Patient ID"
+                            : "Caregiver ID"}
+                    </label>
 
                     <input
                         type="text"
-                        value={patientId}
+                        value={userId}
                         onChange={(e) =>
-                            setPatientId(e.target.value)
+                            setUserId(e.target.value)
                         }
-                        placeholder="Enter Patient ID"
+                        placeholder={
+                            role === "patient"
+                                ? "Enter Patient ID"
+                                : "Enter Caregiver ID"
+                        }
                         required
                     />
                 </div>
@@ -94,23 +140,30 @@ function Login() {
 
                 <br />
 
-                <button type="submit" disabled={loading}>
-                    {loading ? "Logging in..." : "Login"}
+                <button
+                    type="submit"
+                    disabled={loading}
+                >
+                    {loading
+                        ? "Logging in..."
+                        : "Login"}
                 </button>
 
             </form>
 
-            {message && (
-                <p>{message}</p>
-            )}
+            {message && <p>{message}</p>}
 
             <br />
 
-            {/* Sign Up button */}
-            <button onClick={() => window.location.href = "/signup"}>
-                New Patient? Sign Up
-            </button>
-
+            {role === "patient" && (
+                <button
+                    onClick={() =>
+                        window.location.href = "/signup"
+                    }
+                >
+                    New Patient? Sign Up
+                </button>
+            )}
         </div>
     );
 }

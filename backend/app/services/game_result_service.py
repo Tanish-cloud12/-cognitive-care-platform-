@@ -8,6 +8,7 @@ from app.database.db import (
 
 def save_game_result(
     session_id,
+    user_id,
     game_type,
     score,
     mistakes,
@@ -16,18 +17,17 @@ def save_game_result(
     metrics
 ):
 
-    # Find the game session
     session = game_sessions_collection.find_one({
-        "session_id": session_id
+        "session_id": session_id,
+        "user_id": user_id
     })
 
     if not session:
-        return False, "Game session not found"
+        return False, "Game session not found or does not belong to this patient"
 
-    # Create result
     result = {
         "session_id": session_id,
-        "user_id": session["user_id"],
+        "user_id": user_id,
         "game_type": game_type,
         "score": score,
         "mistakes": mistakes,
@@ -37,13 +37,12 @@ def save_game_result(
         "completed_at": datetime.utcnow()
     }
 
-    # Save result
     game_results_collection.insert_one(result)
 
-    # Mark session as completed
     game_sessions_collection.update_one(
         {
-            "session_id": session_id
+            "session_id": session_id,
+            "user_id": user_id
         },
         {
             "$set": {

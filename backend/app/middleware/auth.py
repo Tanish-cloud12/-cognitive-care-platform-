@@ -48,6 +48,7 @@ def token_required(f):
             )
 
             user_id = payload["user_id"]
+            role = payload["role"]
 
         except jwt.ExpiredSignatureError:
 
@@ -61,7 +62,27 @@ def token_required(f):
                 "message": "Invalid token"
             }), 401
 
-        # Give user_id to the protected route
-        return f(user_id, *args, **kwargs)
+        # Give user_id and role to the protected route
+        return f(user_id, role, *args, **kwargs)
 
     return decorated
+
+
+def role_required(required_role):
+
+    def decorator(f):
+
+        @wraps(f)
+        @token_required
+        def decorated(user_id, role, *args, **kwargs):
+
+            if role != required_role:
+                return jsonify({
+                    "message": "Access denied"
+                }), 403
+
+            return f(user_id, role, *args, **kwargs)
+
+        return decorated
+
+    return decorator
