@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
+import PatientReminders from "./PatientReminders";
 
 function Dashboard() {
-    
     const [userId, setUserId] = useState("");
-    const [sessionId, setSessionId] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
-
     const [analysis, setAnalysis] = useState(null);
     const [analysisLoading, setAnalysisLoading] = useState(false);
+    const [message, setMessage] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");
@@ -35,52 +32,15 @@ function Dashboard() {
             })
             .catch((error) => {
                 console.error(error);
+                setMessage("Unable to load user information");
             });
     }, []);
-
-    const handleStartGame = async () => {
-        const token = localStorage.getItem("access_token");
-
-        setLoading(true);
-        setMessage("");
-
-        try {
-            const response = await fetch(
-                "http://127.0.0.1:5000/api/game/session",
-                {
-                    method: "POST",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                setMessage(data.message || "Could not start game");
-                setLoading(false);
-                return;
-            }
-
-            setSessionId(data.session_id);
-
-            setMessage("Game session created successfully!");
-
-            console.log("Session ID:", data.session_id);
-
-        } catch (error) {
-            console.error(error);
-            setMessage("Unable to connect to server");
-        }
-
-        setLoading(false);
-    };
 
     const handleViewAnalysis = async () => {
         const token = localStorage.getItem("access_token");
 
         setAnalysisLoading(true);
+        setMessage("");
 
         try {
             const response = await fetch(
@@ -102,18 +62,12 @@ function Dashboard() {
             }
 
             setAnalysis(data);
-
         } catch (error) {
             console.error(error);
             setMessage("Unable to connect to server");
         }
 
         setAnalysisLoading(false);
-    };
-
-    const handleLogout = () => {
-        localStorage.removeItem("access_token");
-        window.location.href = "/";
     };
 
     return (
@@ -128,27 +82,18 @@ function Dashboard() {
 
             <hr />
 
-            <h3>Game</h3>
-
-            <button
-                onClick={handleStartGame}
-                disabled={loading}
-            >
-                {loading ? "Starting Game..." : "Start Game"}
-            </button>
-
-            {message && (
-                <p>{message}</p>
-            )}
-
             <h3>Performance</h3>
 
             <button
                 onClick={handleViewAnalysis}
                 disabled={analysisLoading}
             >
-                {analysisLoading ? "Loading Analysis..." : "View Analysis"}
+                {analysisLoading
+                    ? "Loading Analysis..."
+                    : "View Analysis"}
             </button>
+
+            {message && <p>{message}</p>}
 
             {analysis && (
                 <div>
@@ -173,21 +118,11 @@ function Dashboard() {
                     <p>
                         Trend: {analysis.trend}
                     </p>
+                     <hr />
+
+            <PatientReminders />
                 </div>
             )}
-
-            <h3>Reminders</h3>
-
-            <button>
-                View Reminders
-            </button>
-
-            <br />
-            <br />
-
-            <button onClick={handleLogout}>
-                Logout
-            </button>
         </div>
     );
 }
