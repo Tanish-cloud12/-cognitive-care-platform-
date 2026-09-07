@@ -19,17 +19,29 @@ function App() {
             <Routes>
 
                 {/* Login */}
-                <Route path="/" element={<Login />} />
+                <Route
+                    path="/"
+                    element={<Login />}
+                />
 
                 {/* Signup */}
-                <Route path="/signup" element={<Signup />} />
+                <Route
+                    path="/signup"
+                    element={<Signup />}
+                />
 
                 {/* ================= PATIENT ================= */}
 
-                <Route path="/dashboard" element={<PatientLayout />}>
+                <Route
+                    path="/dashboard"
+                    element={<PatientLayout />}
+                >
 
                     {/* Home */}
-                    <Route index element={<Dashboard />} />
+                    <Route
+                        index
+                        element={<Dashboard />}
+                    />
 
                     {/* Games */}
                     <Route

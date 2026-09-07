@@ -12,29 +12,33 @@ import {
     ChevronLeft,
 } from "lucide-react";
 
+import { useLanguage } from "../context/LanguageContext";
+
 const PatientSidebar = () => {
 
     const [collapsed, setCollapsed] = useState(false);
 
+    const { t } = useLanguage();
+
     const menuItems = [
         {
-            name: "Home",
+            name: t("home"),
             path: "/dashboard",
             icon: Home,
             end: true,
         },
         {
-            name: "Play Games",
+            name: t("playGames"),
             path: "/dashboard/games",
             icon: Gamepad2,
         },
         {
-            name: "My Reminders",
+            name: t("myReminders"),
             path: "/dashboard/reminders",
             icon: Bell,
         },
         {
-            name: "Memory Gallery",
+            name: t("memoryGallery"),
             path: "/dashboard/memory-gallery",
             icon: Image,
         },
@@ -86,7 +90,7 @@ const PatientSidebar = () => {
 
                     return (
                         <NavLink
-                            key={item.name}
+                            key={item.path}
                             to={item.path}
                             end={item.end}
                             className={({ isActive }) =>
@@ -129,7 +133,7 @@ const PatientSidebar = () => {
 
                     {!collapsed && (
                         <span>
-                            Settings
+                            {t("settings")}
                         </span>
                     )}
                 </NavLink>
@@ -142,6 +146,10 @@ const PatientSidebar = () => {
                             "access_token"
                         );
 
+                        localStorage.removeItem(
+                            "role"
+                        );
+
                         window.location.href = "/";
 
                     }}
@@ -150,7 +158,7 @@ const PatientSidebar = () => {
 
                     {!collapsed && (
                         <span>
-                            Logout
+                            {t("logout")}
                         </span>
                     )}
                 </button>
