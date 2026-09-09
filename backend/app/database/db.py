@@ -2,6 +2,7 @@ import os
 
 from pymongo import MongoClient
 from dotenv import load_dotenv
+import gridfs
 
 
 # Load variables from .env
@@ -13,7 +14,7 @@ MONGO_URI = os.getenv("MONGO_URI")
 DATABASE_NAME = os.getenv("DATABASE_NAME")
 
 
-# Create MongoDB connection
+# Connect to MongoDB
 client = MongoClient(MONGO_URI)
 
 
@@ -21,9 +22,15 @@ client = MongoClient(MONGO_URI)
 db = client[DATABASE_NAME]
 
 
-# Select users collection
+# GridFS for storing memory gallery images
+fs = gridfs.GridFS(db)
+
+
+# Select collections
 users_collection = db["users"]
 game_sessions_collection = db["game_sessions"]
 game_results_collection = db["game_results"]
 caregiver_patient_collection = db["caregiver_patient"]
 reminders_collection = db["reminders"]
+
+memory_gallery_collection = db["memory_gallery"]
