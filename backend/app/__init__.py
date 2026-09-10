@@ -4,6 +4,9 @@ from flask_cors import CORS
 from app.routes.auth import auth_bp
 from app.routes.game import game_bp
 from app.routes.analysis import analysis_bp
+from app.routes.caregiver import caregiver_bp
+from app.routes.reminder_routes import reminder_bp
+from app.routes.memory import memory_bp
 
 
 def create_app():
@@ -13,9 +16,11 @@ def create_app():
     CORS(app)
 
     app.register_blueprint(auth_bp)
-
     app.register_blueprint(game_bp)
     app.register_blueprint(analysis_bp)
+    app.register_blueprint(caregiver_bp)
+    app.register_blueprint(reminder_bp)
+    app.register_blueprint(memory_bp)
 
     @app.route("/")
     def home():

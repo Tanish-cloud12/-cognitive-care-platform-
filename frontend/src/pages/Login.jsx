@@ -43,7 +43,7 @@ function Login() {
                 return;
             }
 
-            // Save token
+            // Save JWT token
             localStorage.setItem(
                 "access_token",
                 data.access_token

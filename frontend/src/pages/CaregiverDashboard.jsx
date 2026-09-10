@@ -7,10 +7,21 @@ import "./CaregiverDashboard.css";
 function CaregiverDashboard() {
     const [userId, setUserId] = useState("");
     const [message, setMessage] = useState("");
+
     const [patients, setPatients] = useState([]);
     const [selectedPatient, setSelectedPatient] = useState("");
     const [analysis, setAnalysis] = useState(null);
 
+    // Reminder states
+    const [showReminders, setShowReminders] = useState(false);
+    const [reminderType, setReminderType] = useState("medicine");
+    const [reminderTitle, setReminderTitle] = useState("");
+    const [reminderDate, setReminderDate] = useState("");
+    const [reminderTime, setReminderTime] = useState("");
+
+    // --------------------------------------------------
+    // CHECK CAREGIVER LOGIN
+    // --------------------------------------------------
     useEffect(() => {
         const token = localStorage.getItem("access_token");
         const role = localStorage.getItem("role");
@@ -42,6 +53,9 @@ function CaregiverDashboard() {
             });
     }, []);
 
+    // --------------------------------------------------
+    // LOAD CONNECTED PATIENTS
+    // --------------------------------------------------
     const handleViewPatients = async () => {
         const token = localStorage.getItem("access_token");
 
@@ -67,17 +81,30 @@ function CaregiverDashboard() {
 
             setPatients(data.patients);
 
+            // Automatically select first patient if available
+            if (data.patients.length > 0) {
+                handleSelectPatient(data.patients[0]);
+            }
+
         } catch (error) {
             console.error(error);
             setMessage("Unable to connect to server");
         }
     };
 
-    const handleViewPerformance = async (patientId) => {
+    // --------------------------------------------------
+    // SELECT ONE PATIENT
+    // --------------------------------------------------
+    const handleSelectPatient = async (patientId) => {
         const token = localStorage.getItem("access_token");
 
         setSelectedPatient(patientId);
+
+        // Clear previous patient's data
         setAnalysis(null);
+
+        // Close reminder form when changing patient
+        setShowReminders(false);
         setMessage("");
 
         try {
@@ -95,7 +122,7 @@ function CaregiverDashboard() {
 
             if (!response.ok) {
                 setMessage(
-                    data.message || "Could not load analysis"
+                    data.message || "Could not load patient data"
                 );
                 return;
             }
@@ -108,6 +135,88 @@ function CaregiverDashboard() {
         }
     };
 
+    // --------------------------------------------------
+    // OPEN / TOGGLE REMINDER SECTION
+    // --------------------------------------------------
+    const handleManageReminders = () => {
+        if (!selectedPatient) {
+            setMessage("Please select a patient first.");
+            return;
+        }
+
+        setMessage("");
+        setShowReminders((prev) => !prev);
+    };
+
+    // --------------------------------------------------
+    // ADD REMINDER
+    // --------------------------------------------------
+    const handleAddReminder = async (e) => {
+        e.preventDefault();
+
+        // Make sure patient is selected
+        if (!selectedPatient) {
+            setMessage("Please select a patient first.");
+            return;
+        }
+
+        // Validate fields
+        if (!reminderTitle || !reminderDate || !reminderTime) {
+            setMessage("Please fill all reminder fields.");
+            return;
+        }
+
+        const token = localStorage.getItem("access_token");
+
+        const reminderData = {
+            patient_id: selectedPatient,
+            type: reminderType,
+            title: reminderTitle,
+            date: reminderDate,
+            time: reminderTime,
+        };
+
+        try {
+            const response = await fetch(
+                "http://127.0.0.1:5000/api/reminders",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(reminderData),
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setMessage(
+                    data.message || "Could not create reminder"
+                );
+                return;
+            }
+
+            // Success message
+            setMessage(
+                `Reminder added successfully for ${selectedPatient}`
+            );
+
+            // Clear form
+            setReminderTitle("");
+            setReminderDate("");
+            setReminderTime("");
+
+        } catch (error) {
+            console.error(error);
+            setMessage("Unable to connect to server");
+        }
+    };
+
+    // --------------------------------------------------
+    // LOGOUT
+    // --------------------------------------------------
     const handleLogout = () => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("role");
@@ -151,7 +260,13 @@ function CaregiverDashboard() {
                 </section>
 
                 {message && (
-                    <div className="dashboard-message error">
+                    <div
+                        className={
+                            message.includes("successfully")
+                                ? "dashboard-message success"
+                                : "dashboard-message error"
+                        }
+                    >
                         {message}
                     </div>
                 )}
@@ -186,7 +301,7 @@ function CaregiverDashboard() {
                                                 ? "patient-chip selected"
                                                 : "patient-chip"
                                         }
-                                        onClick={() => handleViewPerformance(patient)}
+                                        onClick={() => handleSelectPatient(patient)}
                                     >
                                         <div className="patient-chip-header">
                                             <span className="patient-chip-name">
@@ -276,7 +391,91 @@ function CaregiverDashboard() {
                     )}
                 </Card>
 
-                {/* Quick Actions (Stubs preserved with clear Coming Soon state) */}
+                {/* Reminder Management Panel (When Open & Patient Selected) */}
+                {showReminders && selectedPatient && (
+                    <Card className="reminder-form-card">
+                        <div className="card-title-row">
+                            <h2 className="card-title">
+                                Add Reminder for {selectedPatient}
+                            </h2>
+                            <button
+                                type="button"
+                                className="small-action-btn"
+                                onClick={() => setShowReminders(false)}
+                            >
+                                Close Form
+                            </button>
+                        </div>
+
+                        <p className="card-desc">
+                            Schedule medicine or appointment reminders for this patient.
+                        </p>
+
+                        <form className="reminder-form" onSubmit={handleAddReminder}>
+                            <div className="reminder-input-group">
+                                <label htmlFor="reminderType">Reminder Type</label>
+                                <select
+                                    id="reminderType"
+                                    className="reminder-select"
+                                    value={reminderType}
+                                    onChange={(e) => setReminderType(e.target.value)}
+                                >
+                                    <option value="medicine">Medicine</option>
+                                    <option value="appointment">Appointment</option>
+                                </select>
+                            </div>
+
+                            <div className="reminder-input-group">
+                                <label htmlFor="reminderTitle">Title / Description</label>
+                                <input
+                                    id="reminderTitle"
+                                    type="text"
+                                    className="reminder-input"
+                                    value={reminderTitle}
+                                    onChange={(e) => setReminderTitle(e.target.value)}
+                                    placeholder={
+                                        reminderType === "medicine"
+                                            ? "e.g. Take Blood Pressure Pill"
+                                            : "e.g. Neurologist Appointment"
+                                    }
+                                    required
+                                />
+                            </div>
+
+                            <div className="reminder-row">
+                                <div className="reminder-input-group">
+                                    <label htmlFor="reminderDate">Date</label>
+                                    <input
+                                        id="reminderDate"
+                                        type="date"
+                                        className="reminder-input"
+                                        value={reminderDate}
+                                        onChange={(e) => setReminderDate(e.target.value)}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="reminder-input-group">
+                                    <label htmlFor="reminderTime">Time</label>
+                                    <input
+                                        id="reminderTime"
+                                        type="time"
+                                        className="reminder-input"
+                                        value={reminderTime}
+                                        onChange={(e) => setReminderTime(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <Button type="submit">
+                                Add Reminder
+                            </Button>
+                        </form>
+                    </Card>
+                )}
+
+                {/* Quick Actions */}
                 <Card>
                     <h2 className="card-title">Quick Actions</h2>
                     <p className="card-desc">
@@ -319,13 +518,16 @@ function CaregiverDashboard() {
                                 <div>
                                     <h3 className="quick-action-title">Reminders</h3>
                                     <p className="quick-action-desc">
-                                        Manage medicine, hydration, activities and appointments.
+                                        Add and schedule medicine and appointment reminders for patients.
                                     </p>
                                 </div>
-                                <span className="coming-soon-tag">Coming Soon</span>
+                                <span className="selected-badge">Active</span>
                             </div>
-                            <Button variant="secondary" disabled>
-                                Manage Reminders
+                            <Button
+                                variant="secondary"
+                                onClick={handleManageReminders}
+                            >
+                                {showReminders ? "Close Reminders" : "Manage Reminders"}
                             </Button>
                         </div>
                     </div>

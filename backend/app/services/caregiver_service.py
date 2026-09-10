@@ -1,4 +1,5 @@
 from app.database.db import caregiver_patient_collection
+from app.services.analysis_service import get_patient_analysis
 
 
 def connect_patient(caregiver_id, patient_id):
@@ -10,7 +11,6 @@ def connect_patient(caregiver_id, patient_id):
 
     if existing_connection:
         return False, "Patient is already connected"
-
 
     connection = {
         "caregiver_id": caregiver_id,
@@ -36,18 +36,14 @@ def get_caregiver_patients(caregiver_id):
     return patients
 
 
-from app.database.db import (
-    caregiver_patient_collection,
-    game_results_collection
-)
-
-
 def get_patient_analysis_for_caregiver(
     caregiver_id,
     patient_id
 ):
 
-    # Check if caregiver is connected to patient
+    # Check whether this caregiver is connected
+    # to the requested patient.
+
     connection = caregiver_patient_collection.find_one({
         "caregiver_id": caregiver_id,
         "patient_id": patient_id
@@ -56,58 +52,10 @@ def get_patient_analysis_for_caregiver(
     if not connection:
         return None, "Patient is not connected to this caregiver"
 
+    # Reuse the same analysis used by the patient side.
+    analysis = get_patient_analysis(patient_id)
 
-    # Get patient's game results
-    results = list(
-        game_results_collection.find({
-            "user_id": patient_id
-        })
-    )
+    # Add patient ID for caregiver dashboard
+    analysis["patient_id"] = patient_id
 
-    if not results:
-        return {
-            "patient_id": patient_id,
-            "games_played": 0,
-            "average_score": 0,
-            "average_accuracy": 0,
-            "average_time": 0,
-            "trend": "no_data"
-        }, None
-
-
-    games_played = len(results)
-
-    total_score = 0
-    total_accuracy = 0
-    total_time = 0
-
-    for result in results:
-
-        total_score += result.get("score", 0)
-
-        metrics = result.get("metrics", {})
-
-        total_accuracy += metrics.get("accuracy", 0)
-
-        total_time += result.get("time_taken", 0)
-
-
-    average_score = total_score / games_played
-    average_accuracy = total_accuracy / games_played
-    average_time = total_time / games_played
-
-
-    return {
-        "patient_id": patient_id,
-        "games_played": games_played,
-        "average_score": round(average_score, 2),
-        "average_accuracy": round(
-            average_accuracy * 100,
-            2
-        ),
-        "average_time": round(
-            average_time,
-            2
-        ),
-        "trend": "stable"
-    }, None
+    return analysis, None

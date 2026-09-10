@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
+import PatientReminders from "./PatientReminders";
 
 import Button from "../components/Button";
 import Card from "../components/Card";
@@ -12,6 +15,8 @@ function Dashboard() {
 
     const [analysis, setAnalysis] = useState(null);
     const [analysisLoading, setAnalysisLoading] = useState(false);
+
+    const { t } = useLanguage();
 
     useEffect(() => {
         const token = localStorage.getItem("access_token");
@@ -38,6 +43,7 @@ function Dashboard() {
             })
             .catch((error) => {
                 console.error(error);
+                setMessage("Unable to load user information");
             });
     }, []);
 
@@ -67,9 +73,9 @@ function Dashboard() {
             }
 
             setSessionId(data.session_id);
+            sessionStorage.setItem("game_session_id", data.session_id);
 
             setMessage("Game session created successfully!");
-
             console.log("Session ID:", data.session_id);
 
         } catch (error) {
@@ -84,6 +90,7 @@ function Dashboard() {
         const token = localStorage.getItem("access_token");
 
         setAnalysisLoading(true);
+        setMessage("");
 
         try {
             const response = await fetch(
@@ -116,6 +123,7 @@ function Dashboard() {
 
     const handleLogout = () => {
         localStorage.removeItem("access_token");
+        localStorage.removeItem("role");
         window.location.href = "/";
     };
 
@@ -127,12 +135,14 @@ function Dashboard() {
                 <div className="header-container">
                     <div className="header-brand">
                         <div className="header-brand-mark">C</div>
-                        <h2 className="header-title">Cognitive Care</h2>
+                        <h2 className="header-title">
+                            {t("dashboardTitle") || "Cognitive Care"}
+                        </h2>
                     </div>
 
                     <div className="header-user">
                         <span className="patient-badge">
-                            Patient: {userId || "..."}
+                            {t("patient") || "Patient"}: {userId || "..."}
                         </span>
 
                         <button
@@ -140,7 +150,7 @@ function Dashboard() {
                             className="logout-button"
                             onClick={handleLogout}
                         >
-                            Logout
+                            {t("logout") || "Logout"}
                         </button>
                     </div>
                 </div>
@@ -151,13 +161,27 @@ function Dashboard() {
 
                 {/* Friendly Welcome Greeting */}
                 <section className="dashboard-welcome">
-                    <h1>Welcome, {userId || "Patient"}</h1>
+                    <h1>{t("welcome") || "Welcome"}, {userId || t("patient") || "Patient"}</h1>
                     <p>Here&apos;s what you can do today.</p>
                 </section>
 
+                {message && (
+                    <div
+                        className={
+                            message.includes("successfully")
+                                ? "dashboard-message success"
+                                : "dashboard-message error"
+                        }
+                    >
+                        {message}
+                    </div>
+                )}
+
                 {/* Section 1: Play & Practice (Primary Action) */}
                 <Card className="play-card">
-                    <h2 className="card-title">Play & Practice</h2>
+                    <h2 className="card-title">
+                        {t("playGames") || "Play & Practice"}
+                    </h2>
                     <p className="card-desc">
                         Keep your mind active with a short cognitive exercise.
                     </p>
@@ -167,8 +191,14 @@ function Dashboard() {
                             onClick={handleStartGame}
                             disabled={loading}
                         >
-                            {loading ? "Starting Game..." : "Start a Game"}
+                            {loading ? "Starting Game..." : (t("playGames") || "Start a Game")}
                         </Button>
+
+                        <Link to="/dashboard/games" style={{ textDecoration: "none" }}>
+                            <Button variant="secondary">
+                                Open Games Center →
+                            </Button>
+                        </Link>
 
                         {sessionId && (
                             <div className="session-info">
@@ -178,24 +208,14 @@ function Dashboard() {
                                 <span className="coming-soon-badge">Active</span>
                             </div>
                         )}
-
-                        {message && (
-                            <div
-                                className={
-                                    message.includes("successfully")
-                                        ? "dashboard-message success"
-                                        : "dashboard-message error"
-                                }
-                            >
-                                {message}
-                            </div>
-                        )}
                     </div>
                 </Card>
 
                 {/* Section 2: My Progress */}
                 <Card>
-                    <h2 className="card-title">My Progress</h2>
+                    <h2 className="card-title">
+                        {t("yourPerformance") || t("performance") || "My Progress"}
+                    </h2>
                     <p className="card-desc">
                         Check your cognitive activity and performance history.
                     </p>
@@ -204,27 +224,27 @@ function Dashboard() {
                         <div>
                             <div className="metrics-grid">
                                 <div className="metric-tile">
-                                    <span className="metric-label">Games Played</span>
+                                    <span className="metric-label">{t("gamesPlayed") || "Games Played"}</span>
                                     <span className="metric-value">{analysis.games_played}</span>
                                 </div>
 
                                 <div className="metric-tile">
-                                    <span className="metric-label">Average Score</span>
+                                    <span className="metric-label">{t("averageScore") || "Average Score"}</span>
                                     <span className="metric-value">{analysis.average_score}</span>
                                 </div>
 
                                 <div className="metric-tile">
-                                    <span className="metric-label">Accuracy</span>
+                                    <span className="metric-label">{t("averageAccuracy") || "Accuracy"}</span>
                                     <span className="metric-value">{analysis.average_accuracy}%</span>
                                 </div>
 
                                 <div className="metric-tile">
-                                    <span className="metric-label">Average Time</span>
+                                    <span className="metric-label">{t("averageTime") || "Average Time"}</span>
                                     <span className="metric-value">{analysis.average_time}s</span>
                                 </div>
 
                                 <div className="metric-tile trend">
-                                    <span className="metric-label">Trend</span>
+                                    <span className="metric-label">{t("trend") || "Trend"}</span>
                                     <span className="metric-value">{analysis.trend}</span>
                                 </div>
                             </div>
@@ -234,7 +254,7 @@ function Dashboard() {
                                 onClick={handleViewAnalysis}
                                 disabled={analysisLoading}
                             >
-                                {analysisLoading ? "Loading Analysis..." : "Refresh Analysis"}
+                                {analysisLoading ? (t("loadingAnalysis") || "Loading Analysis...") : "Refresh Analysis"}
                             </Button>
                         </div>
                     ) : (
@@ -245,27 +265,29 @@ function Dashboard() {
                                 onClick={handleViewAnalysis}
                                 disabled={analysisLoading}
                             >
-                                {analysisLoading ? "Loading Analysis..." : "View Analysis"}
+                                {analysisLoading ? (t("loadingAnalysis") || "Loading Analysis...") : (t("viewAnalysis") || "View Analysis")}
                             </Button>
                         </div>
                     )}
                 </Card>
 
-                {/* Section 3: Daily Reminders (Stub / Placeholder) */}
+                {/* Section 3: Daily Reminders (Active Component from main) */}
                 <Card>
-                    <h2 className="card-title">Daily Reminders</h2>
+                    <div className="card-title-row">
+                        <h2 className="card-title">
+                            {t("myReminders") || "Daily Reminders"}
+                        </h2>
+                        <Link to="/dashboard/reminders" style={{ textDecoration: "none" }}>
+                            <button type="button" className="logout-button">
+                                Manage Reminders →
+                            </button>
+                        </Link>
+                    </div>
                     <p className="card-desc">
                         Manage medicine, hydration, activities and appointments.
                     </p>
 
-                    <div className="reminders-box">
-                        <p>Your reminders will appear here.</p>
-                        <span className="coming-soon-badge">Coming Soon</span>
-                    </div>
-
-                    <Button variant="secondary" disabled>
-                        View Reminders
-                    </Button>
+                    <PatientReminders />
                 </Card>
 
             </main>
