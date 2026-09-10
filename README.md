@@ -90,7 +90,7 @@ Godot is maintained as an independent game application and can be integrated int
         +--------+--------+
         |                 |
         v                 v
-     MongoDB          AI / Analysis
+     MongoDB          AI / Analysis (in future)
         |                 |
         +--------+--------+
                  |
