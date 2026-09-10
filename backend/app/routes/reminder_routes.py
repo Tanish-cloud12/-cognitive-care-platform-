@@ -69,7 +69,9 @@ def add_reminder(user_id, role):
         return jsonify({
             "message": error
         }), 403
-
+    
+    if reminder and "_id" in reminder:
+     reminder["_id"] = str(reminder["_id"])
     return jsonify({
         "message": "Reminder created successfully",
         "reminder": reminder

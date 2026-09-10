@@ -1,12 +1,8 @@
-from flask import Blueprint, request, jsonify
-
+from flask import Blueprint, jsonify
 from app.middleware.auth import role_required
-
-from app.services.caregiver_service import (
-    connect_patient,
-    get_caregiver_patients,
-    get_patient_analysis_for_caregiver
-)
+from app.services.caregiver_service import get_caregiver_patients
+from app.services.analysis_service import get_patient_analysis
+from app.database.db import caregiver_patient_collection
 
 
 caregiver_bp = Blueprint(
@@ -16,37 +12,9 @@ caregiver_bp = Blueprint(
 )
 
 
-@caregiver_bp.route("/connect", methods=["POST"])
-@role_required("caregiver")
-def connect(user_id, role):
-
-    data = request.get_json()
-
-    patient_id = data.get("patient_id")
-
-    if not patient_id:
-        return jsonify({
-            "message": "Patient ID is required"
-        }), 400
-
-    # user_id comes from the JWT
-    caregiver_id = user_id
-
-    success, message = connect_patient(
-        caregiver_id,
-        patient_id
-    )
-
-    if not success:
-        return jsonify({
-            "message": message
-        }), 409
-
-    return jsonify({
-        "message": message
-    }), 201
-
-
+# --------------------------------------------------
+# GET ALL PATIENTS CONNECTED TO LOGGED-IN CAREGIVER
+# --------------------------------------------------
 @caregiver_bp.route("/patients", methods=["GET"])
 @role_required("caregiver")
 def get_patients(user_id, role):
@@ -58,21 +26,26 @@ def get_patients(user_id, role):
     }), 200
 
 
-@caregiver_bp.route(
-    "/patient/<patient_id>/analysis",
-    methods=["GET"]
-)
+# --------------------------------------------------
+# GET ANALYSIS FOR A CONNECTED PATIENT
+# --------------------------------------------------
+@caregiver_bp.route("/patient/<patient_id>/analysis", methods=["GET"])
 @role_required("caregiver")
 def patient_analysis(user_id, role, patient_id):
 
-    analysis, error = get_patient_analysis_for_caregiver(
-        user_id,
-        patient_id
-    )
+    # Check whether this caregiver is connected
+    # to the requested patient
+    connection = caregiver_patient_collection.find_one({
+        "caregiver_id": user_id,
+        "patient_id": patient_id
+    })
 
-    if error:
+    if not connection:
         return jsonify({
-            "message": error
+            "message": "You are not connected to this patient"
         }), 403
+
+    # Get patient's analysis
+    analysis = get_patient_analysis(patient_id)
 
     return jsonify(analysis), 200
