@@ -19,7 +19,7 @@ def calculate_trend(values, higher_is_better=True):
 
     difference = second_average - first_average
 
-    # Small changes are treated as stable
+    
     if abs(difference) < 0.05:
         return "stable"
 
@@ -120,9 +120,7 @@ def get_patient_analysis(user_id):
         higher_is_better=False
     )
 
-    # -----------------------------------
-    # Completion rate
-    # -----------------------------------
+    
 
     total_sessions = game_sessions_collection.count_documents({
         "user_id": user_id
@@ -140,16 +138,14 @@ def get_patient_analysis(user_id):
     else:
         completion_rate = 0
 
-    # -----------------------------------
-    # Weekly cognitive score
-    # -----------------------------------
+    
 
     accuracy_component = average_accuracy * 100
 
-    # Better completion = better score
+    
     completion_component = completion_rate
 
-    # Fewer hints/replays = better performance
+    
     total_assistance = total_hints + total_replays
 
     assistance_component = max(
@@ -157,8 +153,7 @@ def get_patient_analysis(user_id):
         100 - (total_assistance * 5)
     )
 
-    # Normalize response time.
-    # Faster time gets a higher component.
+    
     if average_time <= 30:
         time_component = 100
     elif average_time <= 60:
@@ -180,9 +175,7 @@ def get_patient_analysis(user_id):
         2
     )
 
-    # -----------------------------------
-    # Weekly trend
-    # -----------------------------------
+    
 
     if (
         accuracy_trend == "improving"
@@ -199,9 +192,7 @@ def get_patient_analysis(user_id):
     else:
         weekly_trend = "Stable"
 
-    # -----------------------------------
-    # Per-game analysis
-    # -----------------------------------
+   
 
     for game_type, data in per_game.items():
 

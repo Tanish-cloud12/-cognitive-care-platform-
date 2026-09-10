@@ -19,7 +19,7 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
 
-        # Get Authorization header
+       
         auth_header = request.headers.get("Authorization")
 
         if not auth_header:
@@ -27,8 +27,7 @@ def token_required(f):
                 "message": "Authorization token is required"
             }), 401
 
-        # Expected format:
-        # Bearer <token>
+        
 
         parts = auth_header.split(" ")
 
@@ -62,7 +61,7 @@ def token_required(f):
                 "message": "Invalid token"
             }), 401
 
-        # Give user_id and role to the protected route
+        
         return f(user_id, role, *args, **kwargs)
 
     return decorated

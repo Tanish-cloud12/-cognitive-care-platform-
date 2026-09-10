@@ -15,7 +15,7 @@ reminder_bp = Blueprint(
 )
 
 
-# CAREGIVER: CREATE REMINDER
+
 @reminder_bp.route("", methods=["POST"])
 @role_required("caregiver")
 def add_reminder(user_id, role):
@@ -68,7 +68,7 @@ def add_reminder(user_id, role):
     }), 201
 
 
-# PATIENT: GET THEIR OWN REMINDERS
+
 @reminder_bp.route("/patient", methods=["GET"])
 @role_required("patient")
 def patient_reminders(user_id, role):
@@ -80,7 +80,7 @@ def patient_reminders(user_id, role):
     }), 200
 
 
-# CAREGIVER: DELETE REMINDER
+
 @reminder_bp.route("/<reminder_id>", methods=["DELETE"])
 @role_required("caregiver")
 def remove_reminder(user_id, role, reminder_id):

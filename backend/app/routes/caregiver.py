@@ -12,9 +12,7 @@ caregiver_bp = Blueprint(
 )
 
 
-# --------------------------------------------------
-# GET ALL PATIENTS CONNECTED TO LOGGED-IN CAREGIVER
-# --------------------------------------------------
+
 @caregiver_bp.route("/patients", methods=["GET"])
 @role_required("caregiver")
 def get_patients(user_id, role):
@@ -26,15 +24,12 @@ def get_patients(user_id, role):
     }), 200
 
 
-# --------------------------------------------------
-# GET ANALYSIS FOR A CONNECTED PATIENT
-# --------------------------------------------------
+
 @caregiver_bp.route("/patient/<patient_id>/analysis", methods=["GET"])
 @role_required("caregiver")
 def patient_analysis(user_id, role, patient_id):
 
-    # Check whether this caregiver is connected
-    # to the requested patient
+    
     connection = caregiver_patient_collection.find_one({
         "caregiver_id": user_id,
         "patient_id": patient_id
@@ -45,7 +40,7 @@ def patient_analysis(user_id, role, patient_id):
             "message": "You are not connected to this patient"
         }), 403
 
-    # Get patient's analysis
+    
     analysis = get_patient_analysis(patient_id)
 
     return jsonify(analysis), 200
