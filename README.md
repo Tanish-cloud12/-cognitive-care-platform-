@@ -135,35 +135,28 @@ Performance & Progress
 ## 7. Repository Structure
 
 ```text
-COGNITIVE-CARE-PLATFORM/
-│
-├── README.md
-├── SUBMISSION_GUIDE.md
+# Tanish-cloud12
+```
+
+## Repository Structure
+
+```text
+Tanisha-cloud12/
 │
 ├── backend/
-│   ├── app/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   ├── database/
-│   │   └── ...
-│   ├── requirements.txt
-│   └── ...
+│   └── Backend application and server-side code
 │
 ├── frontend/
-│   └── ...
-│
-├── docs/
-│   └── ...
+│   └── Frontend application and user interface
 │
 ├── assets/
-│   └── screenshots/
-│
-├── submission/
-│   ├── PRESENTATION.md
-│   └── DEMO.md
+│   └── Project assets and resources
 │
 ├── .gitignore
-└── LICENSE
+│   └── Git ignored files and folders
+│
+└── README.md
+    └── Project documentation
 ```
 
 ### What goes where?
@@ -173,16 +166,12 @@ COGNITIVE-CARE-PLATFORM/
 | Backend source code      | `backend/`            |
 | React frontend           | `frontend/`           |
 | Screenshots              | `assets/screenshots/` |
-| Technical documentation  | `docs/`               |
 | Final presentation       | `submission/`         |
-| Demo video link          | `submission/DEMO.md`  |
 | Project overview         | `README.md`           |
 
 The Godot game is maintained separately and integrated with the main application through the defined communication flow.
 
 ## 8. Final Presentation
-
-The final SIH presentation can be kept inside the repository under:
 
 ```text
 submission/PRESENTATION.md
@@ -191,21 +180,18 @@ submission/PRESENTATION.md
 
 ## 9. Demo Video
 
-A demo video can be added to:
-
 ```text
 submission/DEMO.md
 ```
 
 ## 10. Screenshots / Prototype
 
-Important screenshots of the application can be stored in:
 
 ```text
 assets/screenshots/
 ```
 
-Recommended screenshots include:
+screenshots include:
 
 * Patient dashboard
 * Caregiver dashboard
@@ -220,8 +206,8 @@ Recommended screenshots include:
 Clone the repository:
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
-cd <YOUR_PROJECT_FOLDER>
+git clone https://github.com/Tanish-cloud12/-cognitive-care-platform-/tree/ui-development
+cd -coginitive-care-platform-
 ```
 
 ### Backend
@@ -258,6 +244,9 @@ npm install
 ### Backend
 
 Run the Flask backend using the project's configured Flask entry point.
+```bash
+python run.py
+```
 
 ### Frontend
 
