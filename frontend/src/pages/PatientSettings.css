@@ -1,0 +1,269 @@
+/* ==========================================================================
+   Patient Settings Page Styles - Cognitive Care
+   Clean, calm, elderly-friendly preferences presentation
+   ========================================================================== */
+
+.patient-settings-page {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    font-family: var(--font-body, "Trebuchet MS", Arial, sans-serif);
+    color: var(--color-text, #431407);
+}
+
+/* ---------------- PAGE HEADER ---------------- */
+
+.settings-page-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 4px;
+}
+
+.settings-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    background: var(--color-primary-light, #FFEDD5);
+    border: 1.5px solid var(--color-border, #FDBA74);
+    color: var(--color-primary-dark, #9A3412);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: var(--radius-small, 10px);
+}
+
+.settings-badge-icon {
+    color: var(--color-primary, #C2410C);
+}
+
+.settings-page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-text, #431407);
+    margin: 0;
+    line-height: 1.25;
+    letter-spacing: -0.4px;
+}
+
+.settings-page-subtitle {
+    font-size: 19px;
+    color: var(--color-text-secondary, #7C4A35);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ---------------- SETTINGS CARD ---------------- */
+
+.settings-card {
+    background: var(--color-surface, #FFFFFF);
+    border: 2px solid var(--color-border, #FDBA74);
+    border-radius: var(--radius-large, 24px);
+    padding: 36px;
+    box-shadow: var(--shadow-card, 0 10px 30px rgba(67, 20, 7, 0.10));
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.settings-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.settings-icon-circle {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    border-radius: var(--radius-medium, 16px);
+    background: var(--color-primary-light, #FFEDD5);
+    border: 2px solid var(--color-border, #FDBA74);
+    color: var(--color-primary, #C2410C);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(194, 65, 12, 0.12);
+}
+
+.settings-card-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.settings-card-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-text, #431407);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.settings-card-subtitle {
+    font-size: 17px;
+    color: var(--color-text-secondary, #7C4A35);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ---------------- FORM LAYOUT ---------------- */
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-input-label {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-text, #431407);
+}
+
+.settings-language-select {
+    width: 100%;
+    min-height: 56px;
+    padding: 14px 20px;
+    font-family: inherit;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--color-text, #431407);
+    background-color: var(--color-background, #FFF7ED);
+    border: 2px solid var(--color-border, #FDBA74);
+    border-radius: var(--radius-medium, 16px);
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+    appearance: auto;
+}
+
+.settings-language-select:focus {
+    outline: 3px solid var(--color-primary, #C2410C);
+    outline-offset: 3px;
+    border-color: var(--color-primary, #C2410C);
+    background-color: #FFFFFF;
+}
+
+/* ---------------- SUCCESS FEEDBACK ---------------- */
+
+.settings-feedback-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #DCFCE7;
+    border: 1.5px solid #86EFAC;
+    color: #166534;
+    padding: 14px 18px;
+    border-radius: var(--radius-small, 10px);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.feedback-icon {
+    flex-shrink: 0;
+    color: #166534;
+}
+
+/* ---------------- ACTION BUTTON ---------------- */
+
+.settings-action-row {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 4px;
+}
+
+.settings-save-btn {
+    min-height: 58px;
+    padding: 14px 34px;
+    background: var(--color-primary, #C2410C);
+    color: #FFFFFF;
+    border: none;
+    border-radius: var(--radius-medium, 16px);
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(194, 65, 12, 0.25);
+    transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.settings-save-btn:hover {
+    background: var(--color-primary-dark, #9A3412);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(194, 65, 12, 0.32);
+}
+
+.settings-save-btn:active {
+    transform: translateY(0);
+}
+
+.settings-save-btn:focus-visible {
+    outline: 3px solid var(--color-primary, #C2410C);
+    outline-offset: 3px;
+}
+
+/* ---------------- RESPONSIVE MEDIA QUERIES ---------------- */
+
+@media (max-width: 768px) {
+    .settings-page-title {
+        font-size: 26px;
+    }
+
+    .settings-page-subtitle {
+        font-size: 17px;
+    }
+
+    .settings-card {
+        padding: 24px 20px;
+        border-radius: var(--radius-medium, 16px);
+        gap: 20px;
+    }
+
+    .settings-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .settings-icon-circle {
+        width: 54px;
+        height: 54px;
+        min-width: 54px;
+    }
+
+    .settings-card-title {
+        font-size: 22px;
+    }
+
+    .settings-card-subtitle {
+        font-size: 16px;
+    }
+
+    .settings-language-select {
+        font-size: 18px;
+        min-height: 52px;
+        padding: 12px 16px;
+    }
+
+    .settings-action-row {
+        width: 100%;
+    }
+
+    .settings-save-btn {
+        width: 100%;
+    }
+}
