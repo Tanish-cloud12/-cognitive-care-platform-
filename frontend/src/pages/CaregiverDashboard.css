@@ -1,0 +1,450 @@
+/* ==========================================================================
+   Caregiver Dashboard Styles - Cognitive Care
+   Warm, calm, professional, accessible control center
+   ========================================================================== */
+
+.caregiver-dashboard {
+    min-height: 100vh;
+    background: var(--color-background);
+    padding-bottom: 60px;
+}
+
+/* ---------------- HEADER ---------------- */
+
+.dashboard-header {
+    background: var(--color-surface);
+    border-bottom: 2px solid var(--color-border);
+    padding: 16px 20px;
+}
+
+.header-container {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-brand-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--color-primary);
+    color: white;
+    font-size: 22px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(194, 65, 12, 0.2);
+}
+
+.header-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.caregiver-badge {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    background: var(--color-primary-light);
+    border: 1.5px solid var(--color-border);
+    padding: 8px 14px;
+    border-radius: var(--radius-small);
+}
+
+.logout-button {
+    min-height: 44px;
+    padding: 8px 18px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-small);
+    background: var(--color-background);
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.logout-button:hover {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+}
+
+/* ---------------- MAIN CONTENT ---------------- */
+
+.dashboard-main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* ---------------- WELCOME SECTION ---------------- */
+
+.dashboard-welcome {
+    margin-bottom: 4px;
+}
+
+.dashboard-welcome h1 {
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+}
+
+.dashboard-welcome p {
+    font-size: 20px;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* ---------------- SECTION HEADINGS ---------------- */
+
+.card-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 12px;
+}
+
+.card-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.card-desc {
+    font-size: 18px;
+    color: var(--color-text-secondary);
+    margin: 0 0 22px;
+    line-height: 1.4;
+}
+
+/* ---------------- MESSAGES ---------------- */
+
+.dashboard-message {
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    border-radius: var(--radius-small);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.dashboard-message.success {
+    background: #dcfce7;
+    color: var(--color-success);
+}
+
+.dashboard-message.error {
+    background: #fee2e2;
+    color: var(--color-error);
+}
+
+/* ---------------- PATIENT SELECTION ---------------- */
+
+.patient-chips {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.patient-chip {
+    background: var(--color-background);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.patient-chip:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(194, 65, 12, 0.12);
+}
+
+.patient-chip.selected {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    box-shadow: 0 6px 16px rgba(194, 65, 12, 0.2);
+}
+
+.patient-chip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.patient-chip-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--color-text);
+}
+
+.patient-chip-status {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.selected-badge {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--color-primary);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 999px;
+}
+
+.empty-patients {
+    padding: 24px;
+    background: var(--color-background);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-medium);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.empty-patients p {
+    font-size: 18px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    font-weight: 600;
+}
+
+/* ---------------- CURRENTLY VIEWING BANNER ---------------- */
+
+.viewing-banner {
+    padding: 14px 18px;
+    background: var(--color-primary-light);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-small);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.viewing-banner-text {
+    font-size: 18px;
+    color: var(--color-text);
+}
+
+.viewing-banner-text strong {
+    color: var(--color-primary-dark);
+    font-size: 20px;
+}
+
+/* ---------------- METRICS GRID ---------------- */
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.metric-tile {
+    background: var(--color-background);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    padding: 20px 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 115px;
+}
+
+.metric-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.metric-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1.1;
+}
+
+.metric-tile.trend .metric-value {
+    font-size: 24px;
+    color: var(--color-primary-dark);
+    text-transform: capitalize;
+}
+
+.no-selection-prompt {
+    padding: 24px;
+    background: var(--color-background);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-medium);
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* ---------------- QUICK ACTIONS ---------------- */
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.quick-action-card {
+    background: var(--color-background);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.quick-action-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.quick-action-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--color-text);
+    margin: 0;
+}
+
+.quick-action-desc {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    margin: 6px 0 0;
+    line-height: 1.35;
+}
+
+.coming-soon-tag {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    border: 1px solid var(--color-border);
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.small-action-btn {
+    min-height: 44px;
+    padding: 8px 18px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-small);
+    background: var(--color-background);
+    color: var(--color-text);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.small-action-btn:hover {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+}
+
+/* ---------------- RESPONSIVE MOBILE ---------------- */
+
+@media (max-width: 650px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header-user {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .dashboard-welcome h1 {
+        font-size: 28px;
+    }
+
+    .dashboard-welcome p {
+        font-size: 18px;
+    }
+
+    .card-title {
+        font-size: 22px;
+    }
+
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .metric-tile.trend {
+        grid-column: span 2;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 420px) {
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .metric-tile.trend {
+        grid-column: span 1;
+    }
+}

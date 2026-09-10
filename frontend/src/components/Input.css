@@ -1,0 +1,50 @@
+.input-group {
+    margin-bottom: 24px;
+}
+
+.input-group label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 19px;
+    font-weight: 600;
+
+    color: var(--color-text);
+}
+
+.input-group input {
+    width: 100%;
+    min-height: 60px;
+
+    padding: 14px 16px;
+
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-small);
+     background: #ffffff;
+
+    color: var(--color-text);
+
+    font-size: 18px;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+
+}
+
+.input-group input::placeholder {
+    color: #9a6a54;
+}
+
+.input-group input:hover {
+    border-color: #fb923c;
+}
+
+.input-group input:focus {
+    outline: none;
+
+    border-color: var(--color-primary);
+
+    box-shadow: 0 0 0 4px var(--color-primary-light);
+}

@@ -1,0 +1,133 @@
+.role-selector {
+    margin-bottom: 45px;
+    text-align: center;
+}
+
+.role-title {
+    margin: 0 0 18px;
+
+    font-size: 21px;
+    font-weight: 700;
+
+    color: var(--color-text);
+}
+
+.role-options {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 18px;
+}
+
+/* Individual role cards */
+
+.role-option {
+    width: 190px;
+    min-height: 105px;
+
+    padding: 18px;
+
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-medium);
+
+    /* Same color as page background */
+    background: var(--color-background);
+
+    color: var(--color-text);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Icon */
+
+.role-icon {
+    font-size: 30px;
+    line-height: 1;
+}
+
+/* Main text */
+
+.role-option strong {
+    display: block;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Description */
+
+.role-option small {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 16px;
+
+    color: var(--color-text-secondary);
+}
+
+/* Hover */
+
+.role-option:hover {
+    border-color: var(--color-primary);
+
+    background: var(--color-primary-light);
+
+    transform: translateY(-4px);
+
+    box-shadow: 0 8px 18px rgba(194, 65, 12, 0.15);
+}
+
+/* Selected */
+
+.role-option.active {
+    border-color: var(--color-primary);
+
+    background: var(--color-primary-light);
+
+    box-shadow: 0 5px 14px rgba(194, 65, 12, 0.15);
+}
+
+/* Selected + hover */
+
+.role-option.active:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 10px 22px rgba(194, 65, 12, 0.20);
+}
+
+/* Keyboard accessibility */
+
+.role-option:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+    .role-options {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .role-option {
+        width: 100%;
+        max-width: 300px;
+    }
+}

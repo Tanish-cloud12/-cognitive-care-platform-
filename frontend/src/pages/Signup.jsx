@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+import Button from "../components/Button";
+import Input from "../components/Input";
+import Card from "../components/Card";
+import "./Signup.css";
+
 function Signup() {
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
@@ -60,84 +65,119 @@ function Signup() {
     };
 
     return (
-        <div>
-            <h1>Cognitive Care</h1>
+        <main className="signup-page">
 
-            <h2>Create Patient Account</h2>
+            <div className="signup-container">
 
-            <form onSubmit={handleSignup}>
+                {/* Branding */}
+                <div className="signup-brand">
+                    <div className="brand-mark">C</div>
 
-                <div>
-                    <label>Patient ID</label>
+                    <h1>Cognitive Care</h1>
 
-                    <input
-                        type="text"
-                        value={userId}
-                        onChange={(e) =>
-                            setUserId(e.target.value)
-                        }
-                        placeholder="Enter Patient ID"
-                        required
-                    />
+                    <p>
+                        Simple, supportive care for everyday life.
+                    </p>
                 </div>
 
-                <br />
+                {/* Signup Card */}
+                <Card className="signup-card">
 
-                <div>
-                    <label>Password</label>
+                    <div className="signup-header">
+                        <h2>Create Patient Account</h2>
 
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) =>
-                            setPassword(e.target.value)
-                        }
-                        placeholder="Create Password"
-                        required
-                    />
-                </div>
+                        <p>
+                            Sign up to begin your personalized care journey.
+                        </p>
+                    </div>
 
-                <br />
+                    <form onSubmit={handleSignup}>
 
-                <div>
-                    <label>Confirm Password</label>
+                        <Input
+                            id="userId"
+                            label="Patient ID"
+                            type="text"
+                            value={userId}
+                            onChange={(e) =>
+                                setUserId(e.target.value)
+                            }
+                            placeholder="Choose a Patient ID"
+                            required
+                        />
 
-                    <input
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) =>
-                            setConfirmPassword(e.target.value)
-                        }
-                        placeholder="Confirm Password"
-                        required
-                    />
-                </div>
+                        <Input
+                            id="password"
+                            label="Password"
+                            type="password"
+                            value={password}
+                            onChange={(e) =>
+                                setPassword(e.target.value)
+                            }
+                            placeholder="Create a password"
+                            required
+                        />
 
-                <br />
+                        <Input
+                            id="confirmPassword"
+                            label="Confirm Password"
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) =>
+                                setConfirmPassword(e.target.value)
+                            }
+                            placeholder="Re-enter your password"
+                            required
+                        />
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                >
-                    {loading
-                        ? "Creating Account..."
-                        : "Sign Up"}
-                </button>
+                        {message && (
+                            <p
+                                className={
+                                    message.includes("successful")
+                                        ? "signup-message success"
+                                        : "signup-message error"
+                                }
+                            >
+                                {message}
+                            </p>
+                        )}
 
-            </form>
+                        <Button
+                            type="submit"
+                            disabled={loading}
+                        >
+                            {loading
+                                ? "Creating Account..."
+                                : "Create Account"}
+                        </Button>
 
-            {message && <p>{message}</p>}
+                    </form>
 
-            <br />
+                    {/* Back to Login */}
+                    <div className="login-prompt">
 
-            <button
-                onClick={() =>
-                    window.location.href = "/"
-                }
-            >
-                Already have an account? Login
-            </button>
-        </div>
+                        <p>Already have an account?</p>
+
+                        <button
+                            type="button"
+                            className="login-link-button"
+                            onClick={() =>
+                                window.location.href = "/"
+                            }
+                        >
+                            Sign in to your account
+                        </button>
+
+                    </div>
+
+                </Card>
+
+                <p className="signup-footer">
+                    Your care. Your support. Your peace of mind.
+                </p>
+
+            </div>
+
+        </main>
     );
 }
 

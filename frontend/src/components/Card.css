@@ -1,0 +1,18 @@
+.card {
+    background: var(--color-surface);
+
+    border: 2px solid var(--color-border);
+
+    border-radius: var(--radius-large);
+
+    padding: 40px;
+
+    box-shadow: var(--shadow-card);
+}
+
+@media (max-width: 600px) {
+    .card {
+        padding: 24px 18px;
+        border-radius: var(--radius-medium);
+    }
+}

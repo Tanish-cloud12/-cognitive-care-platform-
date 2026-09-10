@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+import Button from "../components/Button";
+import Input from "../components/Input";
+import Card from "../components/Card";
+import RoleSelector from "../components/Roleselector";
+import "./Login.css";
+
 function Login() {
     const [role, setRole] = useState("patient");
     const [userId, setUserId] = useState("");
@@ -66,106 +72,124 @@ function Login() {
         setLoading(false);
     };
 
-    return (
-        <div>
-            <h1>Cognitive Care</h1>
+    return(
+        <main className="login-page">
 
-            <h2>Login</h2>
+            <div className="login-container">
 
-            <div>
-                <label>Select Role</label>
+                {/* Branding */}
+                <div className="login-brand">
+                    <div className="brand-mark">C</div>
 
-                <br />
+                    <h1>Cognitive Care</h1>
 
-                <button
-                    type="button"
-                    onClick={() => setRole("patient")}
-                >
-                    Patient
-                </button>
+                    <p>
+                        Simple, supportive care for everyday life.
+                    </p>
+                </div>
 
-                <button
-                    type="button"
-                    onClick={() => setRole("caregiver")}
-                >
-                    Caregiver
-                </button>
+                {/* Login Card */}
+                <Card className="login-card">
+
+                    <div className="login-header">
+                        <h2>Welcome back</h2>
+
+                        <p>
+                            Please sign in to continue.
+                        </p>
+                    </div>
+
+                    <form onSubmit={handleLogin}>
+
+                        <RoleSelector
+                            role={role}
+                            setRole={setRole}
+                        />
+
+                        <Input
+                            id="userId"
+                            label={
+                                role === "patient"
+                                    ? "Patient ID"
+                                    : "Caregiver ID"
+                            }
+                            type="text"
+                            value={userId}
+                            onChange={(e) =>
+                                setUserId(e.target.value)
+                            }
+                            placeholder={
+                                role === "patient"
+                                    ? "Enter your Patient ID"
+                                    : "Enter your Caregiver ID"
+                            }
+                            required
+                        />
+
+                        <Input
+                            id="password"
+                            label="Password"
+                            type="password"
+                            value={password}
+                            onChange={(e) =>
+                                setPassword(e.target.value)
+                            }
+                            placeholder="Enter your password"
+                            required
+                        />
+
+                        {message && (
+                            <p
+                                className={
+                                    message === "Login successful!"
+                                        ? "login-message success"
+                                        : "login-message error"
+                                }
+                            >
+                                {message}
+                            </p>
+                        )}
+
+                        <Button
+                            type="submit"
+                            disabled={loading}
+                        >
+                            {loading
+                                ? "Logging in..."
+                                : "Log In"}
+                        </Button>
+
+                    </form>
+
+                    {/* Signup */}
+                    {role === "patient" && (
+                        <div className="signup-prompt">
+
+                            <p>New to Cognitive Care?</p>
+
+                            <button
+                                type="button"
+                                className="signup-button"
+                                onClick={() =>
+                                    window.location.href = "/signup"
+                                }
+                            >
+                                Create a patient account
+                            </button>
+
+                        </div>
+                    )}
+
+                </Card>
+
+                <p className="login-footer">
+                    Your care. Your support. Your peace of mind.
+                </p>
+
             </div>
 
-            <br />
-
-            <p>
-                Selected role: <strong>{role}</strong>
-            </p>
-
-            <form onSubmit={handleLogin}>
-
-                <div>
-                    <label>
-                        {role === "patient"
-                            ? "Patient ID"
-                            : "Caregiver ID"}
-                    </label>
-
-                    <input
-                        type="text"
-                        value={userId}
-                        onChange={(e) =>
-                            setUserId(e.target.value)
-                        }
-                        placeholder={
-                            role === "patient"
-                                ? "Enter Patient ID"
-                                : "Enter Caregiver ID"
-                        }
-                        required
-                    />
-                </div>
-
-                <br />
-
-                <div>
-                    <label>Password</label>
-
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) =>
-                            setPassword(e.target.value)
-                        }
-                        placeholder="Enter Password"
-                        required
-                    />
-                </div>
-
-                <br />
-
-                <button
-                    type="submit"
-                    disabled={loading}
-                >
-                    {loading
-                        ? "Logging in..."
-                        : "Login"}
-                </button>
-
-            </form>
-
-            {message && <p>{message}</p>}
-
-            <br />
-
-            {role === "patient" && (
-                <button
-                    onClick={() =>
-                        window.location.href = "/signup"
-                    }
-                >
-                    New Patient? Sign Up
-                </button>
-            )}
-        </div>
-    );
+        </main>
+    )
 }
 
 export default Login;

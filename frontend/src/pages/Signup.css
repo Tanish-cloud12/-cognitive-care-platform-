@@ -1,0 +1,192 @@
+.signup-page {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+
+    background: var(--color-background);
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 520px;
+}
+
+/* ---------------- BRAND ---------------- */
+
+.signup-brand {
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+.brand-mark {
+    width: 64px;
+    height: 64px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: var(--color-primary);
+
+    color: white;
+
+    font-size: 30px;
+    font-weight: 800;
+
+    box-shadow: 0 7px 16px rgba(194, 65, 12, 0.20);
+}
+
+.signup-brand h1 {
+    margin: 0;
+
+    font-size: 34px;
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+}
+
+.signup-brand p {
+    margin: 9px 0 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 18px;
+}
+
+/* ---------------- SIGNUP CARD ---------------- */
+
+.signup-card {
+    padding: 40px;
+}
+
+.signup-header {
+    margin-bottom: 28px;
+}
+
+.signup-header h2 {
+    margin: 0;
+
+    font-size: 30px;
+    font-weight: 800;
+
+    letter-spacing: -0.3px;
+}
+
+.signup-header p {
+    margin: 8px 0 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 18px;
+}
+
+/* ---------------- MESSAGE ---------------- */
+
+.signup-message {
+    padding: 14px 16px;
+
+    margin: 0 0 20px;
+
+    border-radius: var(--radius-small);
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.signup-message.success {
+    background: #dcfce7;
+    color: var(--color-success);
+}
+
+.signup-message.error {
+    background: #fee2e2;
+    color: var(--color-error);
+}
+
+/* ---------------- LOGIN PROMPT ---------------- */
+
+.login-prompt {
+    margin-top: 30px;
+
+    padding-top: 24px;
+
+    border-top: 2px solid var(--color-border);
+
+    text-align: center;
+}
+
+.login-prompt p {
+    margin: 0 0 9px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 17px;
+}
+
+.login-link-button {
+    border: none;
+
+    background: transparent;
+
+    color: var(--color-primary-dark);
+
+    font-size: 17px;
+    font-weight: 700;
+
+    text-decoration: underline;
+
+    text-underline-offset: 3px;
+
+    cursor: pointer;
+}
+
+.login-link-button:hover {
+    color: var(--color-primary);
+}
+
+/* ---------------- FOOTER ---------------- */
+
+.signup-footer {
+    margin: 24px 0 0;
+
+    text-align: center;
+
+    color: var(--color-text-secondary);
+
+    font-size: 15px;
+}
+
+/* ---------------- MOBILE ---------------- */
+
+@media (max-width: 600px) {
+    .signup-page {
+        padding: 28px 16px;
+
+        align-items: flex-start;
+    }
+
+    .signup-container {
+        margin-top: 20px;
+    }
+
+    .signup-card {
+        padding: 28px 22px;
+    }
+
+    .signup-brand h1 {
+        font-size: 29px;
+    }
+
+    .signup-header h2 {
+        font-size: 27px;
+    }
+}

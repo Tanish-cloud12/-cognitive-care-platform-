@@ -1,0 +1,28 @@
+:root {
+    /* Colors */
+    --color-primary: #c2410c;
+    --color-primary-dark: #9a3412;
+    --color-primary-light: #ffedd5;
+
+    --color-background: #fff7ed;
+    --color-surface: #ffffff;
+
+    --color-text: #431407;
+    --color-text-secondary: #7c4a35;
+
+    --color-border: #fdba74;
+
+    --color-error: #b91c1c;
+    --color-success: #166534;
+
+    /* Border radius */
+    --radius-small: 10px;
+    --radius-medium: 16px;
+    --radius-large: 24px;
+
+    /* Shadows */
+    --shadow-card: 0 10px 30px rgba(67, 20, 7, 0.10);
+
+    /* Typography */
+    --font-body: "Trebuchet MS", Arial, sans-serif;
+}
