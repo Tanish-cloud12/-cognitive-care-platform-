@@ -347,7 +347,7 @@ function Login() {
                                         "/signup"
                                 }
                             >
-                                Create a patient account
+                                Create a patient-account
                             </button>
 
                         </div>
