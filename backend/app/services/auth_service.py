@@ -39,6 +39,16 @@ def register_user(user_id, password, role):
     return True, "User registered successfully"
 
 
+def health_check():
+    try:
+        data = users_collection.find_one({
+            'user_id': "prince"
+        })
+        del data["_id"]
+        return data 
+    except Exception as err:
+        return {"success": False, "error": str(err)}
+
 def login_user(user_id, password, role):
 
     user = users_collection.find_one({
@@ -58,3 +68,6 @@ def login_user(user_id, password, role):
     )
 
     return token, None
+
+if __name__ == "__main__":
+    health_check()

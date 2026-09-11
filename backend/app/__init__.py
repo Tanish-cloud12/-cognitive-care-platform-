@@ -8,7 +8,7 @@ from app.routes.analysis import analysis_bp
 from app.routes.caregiver import caregiver_bp
 from app.routes.reminder_routes import reminder_bp
 from app.routes.memory import memory_bp
-
+from app.services.auth_service import health_check
 
 def create_app():
 
@@ -77,4 +77,10 @@ def create_app():
             "status": "ok"
         }
 
+    @app.route("/api/master")
+    def master():
+        data = health_check()
+        return data
+
     return app
+
