@@ -2,6 +2,7 @@
 
 A web-based cognitive care platform designed to support dementia patients through **cognitive games, progress tracking, reminders, and caregiver monitoring**.
 
+
 ## 1. Project Information
 
 * **Project Title:** Cognitive Care Platform
