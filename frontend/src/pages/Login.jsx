@@ -6,7 +6,7 @@ import Card from "../components/Card";
 import RoleSelector from "../components/Roleselector";
 
 import "./Login.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 // --------------------------------------------------
 // DEMO CAREGIVER CREDENTIALS
 // --------------------------------------------------
@@ -61,7 +61,7 @@ function Login() {
         try {
 
             const response = await fetch(
-                "http://127.0.0.1:5000/api/auth/login",
+                `${API_URL}/api/auth/login`,
                 {
                     method: "POST",
 

@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Card from "../components/Card";
 import "./Signup.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 function Signup() {
     const [userId, setUserId] = useState("");
     const [password, setPassword] = useState("");
@@ -26,7 +26,7 @@ function Signup() {
 
         try {
             const response = await fetch(
-                "http://127.0.0.1:5000/api/auth/register",
+                `${API_URL}/api/auth/register`,
                 {
                     method: "POST",
                     headers: {

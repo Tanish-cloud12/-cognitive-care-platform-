@@ -6,7 +6,7 @@ import PatientReminders from "./PatientReminders";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import "./Dashboard.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 function Dashboard() {
     const [userId, setUserId] = useState("");
     const [sessionId, setSessionId] = useState("");
@@ -26,7 +26,7 @@ function Dashboard() {
             return;
         }
 
-        fetch("http://127.0.0.1:5000/api/auth/me", {
+        fetch(`${API_URL}/api/auth/me`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -55,7 +55,7 @@ function Dashboard() {
 
         try {
             const response = await fetch(
-                "http://127.0.0.1:5000/api/game/session",
+                `${API_URL}/api/game/session`,
                 {
                     method: "POST",
                     headers: {
@@ -94,7 +94,7 @@ function Dashboard() {
 
         try {
             const response = await fetch(
-                "http://127.0.0.1:5000/api/analysis",
+                `${API_URL}/api/analysis`,
                 {
                     method: "GET",
                     headers: {

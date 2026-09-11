@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Images, Camera, Upload, Heart, ImageOff } from "lucide-react";
 import "./MemoryGallery.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 function MemoryGallery() {
     const [photos, setPhotos] = useState([]);
     const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -21,7 +21,7 @@ function MemoryGallery() {
 
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:5000/api/memory",
+                   `${API_URL}${memory.image_url}`,
                     {
                         method: "GET",
                         headers: {
@@ -47,7 +47,7 @@ function MemoryGallery() {
                     memories.map(async (memory) => {
                         try {
                             const imageResponse = await fetch(
-                                `http://127.0.0.1:5000${memory.image_url}`,
+                                `${API_URL}${memory.image_url}`,
                                 {
                                     method: "GET",
                                     headers: {
@@ -154,7 +154,7 @@ function MemoryGallery() {
             );
 
             const response = await fetch(
-                "http://127.0.0.1:5000/api/memory",
+                `${API_URL}/api/memory`,
                 {
                     method: "POST",
                     headers: {
@@ -181,7 +181,7 @@ function MemoryGallery() {
 
             // Reload memories from MongoDB
             const memoriesResponse = await fetch(
-                "http://127.0.0.1:5000/api/memory",
+                `${API_URL}/api/memory`,
                 {
                     method: "GET",
                     headers: {
@@ -206,7 +206,7 @@ function MemoryGallery() {
             const memoriesWithImages = await Promise.all(
                 memories.map(async (memory) => {
                     const imageResponse = await fetch(
-                        `http://127.0.0.1:5000${memory.image_url}`,
+                        `${API_URL}${memory.image_url}`,
                         {
                             method: "GET",
                             headers: {

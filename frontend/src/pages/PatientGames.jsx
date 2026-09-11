@@ -78,7 +78,7 @@ function PatientGames() {
              *
              * Flask serves them through:
              *
-             * http://localhost:5000/game/
+             
              *
              * The session ID is passed to Godot through the URL.
              */

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import "./CaregiverDashboard.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 function CaregiverDashboard() {
     const [userId, setUserId] = useState("");
     const [message, setMessage] = useState("");
@@ -27,7 +27,7 @@ function CaregiverDashboard() {
 
         try {
             const response = await fetch(
-                `http://127.0.0.1:5000/api/caregiver/patient/${patientId}/analysis`,
+                `${API_URL}/api/caregiver/patient/${patientId}/analysis`,
                 {
                     method: "GET",
                     headers: {
@@ -71,7 +71,7 @@ function CaregiverDashboard() {
             try {
                 // Get logged-in caregiver
                 const meResponse = await fetch(
-                    "http://127.0.0.1:5000/api/auth/me",
+                    `${API_URL}/api/auth/me`,
                     {
                         method: "GET",
                         headers: {
@@ -96,7 +96,7 @@ function CaregiverDashboard() {
 
                 // Get all patients
                 const patientsResponse = await fetch(
-                    "http://127.0.0.1:5000/api/caregiver/patients",
+                    `${API_URL}/api/caregiver/patients`,
                     {
                         method: "GET",
                         headers: {
@@ -183,7 +183,7 @@ function CaregiverDashboard() {
 
         try {
             const response = await fetch(
-                "http://127.0.0.1:5000/api/reminders",
+                `${API_URL}/api/reminders`,
                 {
                     method: "POST",
                     headers: {

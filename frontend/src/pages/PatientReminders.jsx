@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Bell, Pill, Calendar, Clock, AlertCircle } from "lucide-react";
 import "./PatientReminders.css";
-
+const API_URL = import.meta.env.VITE_API_URL;
 function PatientReminders() {
     const [reminders, setReminders] = useState([]);
     const [message, setMessage] = useState("");
@@ -13,7 +13,7 @@ function PatientReminders() {
 
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:5000/api/reminders/patient",
+                   `${API_URL}/api/reminders/patient`,
                     {
                         method: "GET",
                         headers: {
