@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Gamepad2, Play, Sparkles, HeartHandshake } from "lucide-react";
 import "./PatientGames.css";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function PatientGames() {
     const [loading, setLoading] = useState(false);
@@ -29,7 +30,7 @@ function PatientGames() {
 
             // Create a game session
             const response = await fetch(
-                "http://localhost:5000/api/game/session",
+                `${API_URL}/api/game/session`,
                 {
                     method: "POST",
                     headers: {
@@ -82,9 +83,9 @@ function PatientGames() {
              * The session ID is passed to Godot through the URL.
              */
             const gameUrl =
-                `http://localhost:5000/game/?session_id=${encodeURIComponent(
-                    data.session_id
-                )}`;
+                `${API_URL}/game/?session_id=${encodeURIComponent(
+    data.session_id
+)}`;
 
             console.log("Opening Godot game:", gameUrl);
 
