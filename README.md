@@ -166,7 +166,6 @@ Tanisha-cloud12/
 | ------------------------ | --------------------- |
 | Backend source code      | `backend/`            |
 | React frontend           | `frontend/`           |
-| Screenshots              | `assets/screenshots/` |
 | Final presentation       | `submission/`         |
 | Project overview         | `README.md`           |
 
@@ -185,12 +184,9 @@ submission/PRESENTATION.md
 submission/DEMO.md
 ```
 
-## 10. Screenshots / Prototype
+## 10. Prototype Website
 
-
-```text
-assets/screenshots/
-```
+[Prototype Website](https://github.com/Tanish-cloud12/-cognitive-care-platform-/tree/ui-development)
 
 screenshots include:
 
