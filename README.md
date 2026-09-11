@@ -186,7 +186,7 @@ submission/DEMO.md
 
 ## 10. Prototype Website
 
-[Prototype Website](https://github.com/Tanish-cloud12/-cognitive-care-platform-/tree/ui-development)
+[Prototype Website](https://cognitive-care-platform-roan.vercel.app/)
 
 screenshots include:
 
