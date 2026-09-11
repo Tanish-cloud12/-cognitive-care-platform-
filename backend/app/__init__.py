@@ -68,7 +68,7 @@ def create_app():
     @app.route("/")
     def home():
         return {
-            "message": "Cognitive Care Backend is running!"
+            "message": "Cognitive Care Backend is running!!"
         }
 
     @app.route("/api/health")
