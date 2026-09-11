@@ -173,16 +173,12 @@ The Godot game is maintained separately and integrated with the main application
 
 ## 8. Final Presentation
 
-```text
-submission/PRESENTATION.md
-```
+https://docs.google.com/presentation/d/1Fyt-aJZoUIWfMt2ApVVq_N7dFbamw_aE/edit?usp=drivesdk&ouid=106903503128550679013&rtpof=true&sd=true
 
 
 ## 9. Demo Video
 
-```text
-submission/DEMO.md
-```
+https://drive.google.com/file/d/1_advkLgZWjUotThY1mXmXgQgHT2CFv-X/view?usp=sharing
 
 ## 10. Prototype Website
 
